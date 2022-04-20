@@ -8,18 +8,15 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Paper,
   TextField,
 } from '@mui/material';
-import React, { Suspense } from 'react';
+import React from 'react';
 import * as Style from 'styles/signup';
 import * as Hook from 'hooks/signup';
 import Head from 'next/head';
-import { theme } from 'utils/theme';
 import { useRouter } from 'next/router';
-import { AppContext } from 'next/app';
-import { NextPageContext } from 'next';
-import { initializeApollo } from 'utils/use-apollo';
+import nookies from 'nookies';
+
 const Signup = () => {
   const { values, setValues, functions, loading } = Hook.useSignup();
   const router = useRouter();
@@ -85,7 +82,7 @@ const Signup = () => {
               label="Password"
             />
           </FormControl>
-          {values.error && <Alert color="error">{values.error}</Alert>}
+          {values.error && <Alert  color="error">{values.error}</Alert>}
           <Button
             variant="contained"
             onClick={functions.handleCreateUser}
@@ -107,6 +104,23 @@ const Signup = () => {
       </Style.Container>
     </>
   );
+};
+
+export const getServerSideProps = async (ctx: any) => {
+  const { jwt } = nookies.get(ctx);
+
+  if (jwt) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+      props: {},
+    };
+  }
+  return {
+    props: {},
+  };
 };
 
 export default Signup;

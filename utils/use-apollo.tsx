@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ApolloClient,
   from,
@@ -6,33 +6,50 @@ import {
   InMemoryCache,
   NormalizedCacheObject,
 } from '@apollo/client';
-import { concatPagination } from '@apollo/client/utilities';
+// import { concatPagination } from '@apollo/client/utilities';
 import { onError } from '@apollo/client/link/error';
-import merge from 'deepmerge';
-import isEqual from 'lodash/isEqual';
+import { createNetworkStatusNotifier } from 'react-apollo-network-status';
+import { Alert, Snackbar } from '@mui/material';
+// import merge from 'deepmerge';
+// import isEqual from 'lodash/isEqual';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
+
+const { link: Link, useApolloNetworkStatus } = createNetworkStatusNotifier();
+
+//global error handler component or global error handler
+export function GlobalLoadingIndicator() {
+  const status = useApolloNetworkStatus();
+  const [showSnack, setShowSnack] = useState(false);
+
+  useEffect(() => {
+    if (status.queryError?.networkError) {
+      setShowSnack(true);
+    }
+  }, [status]);
+
+  return (
+    <Snackbar
+      open={showSnack}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      autoHideDuration={4000}
+      color="success"
+    >
+      <Alert severity="error" sx={{ width: '100%' }}>
+        Internet connection issue
+      </Alert>
+    </Snackbar>
+  );
+}
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:3000/graphql',
   credentials: 'include',
 });
 
-const myOnErrorLink = onError(({ graphQLErrors, networkError, response }) => {
-  console.log(response);
-  if (graphQLErrors) console.log(graphQLErrors);
-  graphQLErrors?.map(({ message, locations, path }) =>
-    console.log(
-      `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-    )
-  );
-
-  if (networkError) console.log(`[Network error]: ${networkError}`);
-});
-
-const link = from([myOnErrorLink, httpLink]);
+const link = from([Link, httpLink]);
 
 function createApolloClient() {
   return new ApolloClient({
@@ -73,7 +90,7 @@ export function initializeApollo(initialState = null) {
   return _apolloClient;
 }
 
-export function addApolloState(client, pageProps) {
+export function addApolloState(client: any, pageProps: any) {
   if (pageProps?.props) {
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
   }

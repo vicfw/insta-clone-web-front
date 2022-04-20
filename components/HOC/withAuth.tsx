@@ -1,20 +1,17 @@
 import Router from 'next/router';
 import nookies from 'nookies';
-const checkUserAuthentication = () => {
-  if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('token');
-    return { auth: Boolean(token) };
-  }
+
+const checkUserAuthentication = (cookie: string) => {
+  return { auth: Boolean(cookie) };
 };
 
 const withAuth = (WrappedComponent: any) => {
   const hocComponent = ({ ...props }) => <WrappedComponent {...props} />;
 
   hocComponent.getInitialProps = async (context: any) => {
-    const cookies = nookies.get(context);
-    console.log(cookies);
+    const cookie = nookies.get(context);
 
-    const userAuth = await checkUserAuthentication();
+    const userAuth = await checkUserAuthentication(cookie.jwt);
 
     // Are you an authorized user or not?
     if (!userAuth?.auth) {

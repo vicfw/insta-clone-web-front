@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { SingletonRouter } from 'next/router';
+import { SingletonRouter, useRouter } from 'next/router';
 import { SIGNIN } from 'gql/mutations/signIn';
 import ErrorHandler from 'utils/ErrorHandler';
 
@@ -42,10 +42,10 @@ export const useUserInterface = (routerProp: SingletonRouter) => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [error, setError] = useState('');
 
-  console.log(error);
+  const router = useRouter();
 
   useEffect(() => {
-    if (Object.keys(routerProp.query).length !== 0) {
+    if (Object.keys(router.query).length !== 0) {
       setIsCompleted(true);
     }
   }, []);
@@ -80,8 +80,7 @@ export const useUserInterface = (routerProp: SingletonRouter) => {
           setError(ErrorHandler(dt));
           return;
         }
-        const token = dt.data.singinUser.accessToken;
-        localStorage.setItem('token', token);
+        window.location.href = '/';
       })
       .catch((e) => {});
   };

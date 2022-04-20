@@ -1,13 +1,11 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   Alert,
   Button,
   Container,
-  FilledInput,
   FormControl,
   Grid,
   IconButton,
-  Input,
   InputAdornment,
   InputLabel,
   OutlinedInput,
@@ -20,7 +18,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useRouter, withRouter } from 'next/router';
 import Head from 'next/head';
-import * as Types from './types';
+import * as Types from '../../types/login';
+import nookies from 'nookies';
 
 const Login: FC<Types.LoginProps> = ({ router: routerProp }) => {
   const {} = useSlider();
@@ -134,6 +133,23 @@ const Login: FC<Types.LoginProps> = ({ router: routerProp }) => {
       </PageContainer>
     </>
   );
+};
+
+export const getServerSideProps = async (ctx: any) => {
+  const { jwt } = nookies.get(ctx);
+
+  if (jwt) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+      props: {},
+    };
+  }
+  return {
+    props: {},
+  };
 };
 
 export default withRouter(Login);
