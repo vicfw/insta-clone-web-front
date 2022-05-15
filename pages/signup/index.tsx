@@ -82,13 +82,13 @@ const Signup = () => {
               label="Password"
             />
           </FormControl>
-          {values.error && <Alert  color="error">{values.error}</Alert>}
+          {values.error && <Alert color="error">{values.error}</Alert>}
           <Button
             variant="contained"
             onClick={functions.handleCreateUser}
             disabled={values.email && values.password ? false : true}
           >
-            Log In
+            Sign Up
           </Button>
           <span className="privacy">
             By signing up, you agree to our Terms , Data Policy and Cookies

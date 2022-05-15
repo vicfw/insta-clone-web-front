@@ -2,18 +2,16 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
 import { ApolloProvider } from '@apollo/client';
-import {
-  GlobalLoadingIndicator,
-  initializeApollo,
-  useApollo,
-} from 'utils/use-apollo';
+import CreateClient, { GlobalLoadingIndicator } from 'utils/use-apollo';
 import { theme } from 'utils/theme';
 import { useRouter } from 'next/router';
 import { ContextProvider } from 'context/UserContext';
+import { NextPageContext } from 'next';
+import { GET_CURRENT_USER } from 'gql/query/getCurrentUser';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const client = useApollo(pageProps);
+  const client = CreateClient(null);
 
   return (
     <ApolloProvider client={client}>
@@ -27,9 +25,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export async function getStaticProps(ctx: any) {
-  //test it for ssr query
-  const apolloClient = initializeApollo();
-}
+
 
 export default MyApp;

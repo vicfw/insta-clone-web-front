@@ -8,7 +8,6 @@ export const SIGNUP = gql`
       id
       email
       password
-      image_uri
       description
       followers
       following

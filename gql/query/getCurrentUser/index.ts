@@ -6,10 +6,16 @@ export const GET_CURRENT_USER = gql`
       id
       email
       username
-      image_uri
       description
       followers
       following
+      profile {
+        id
+        profile_pic
+      }
+      story {
+        stories
+      }
     }
   }
 `;

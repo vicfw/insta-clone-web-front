@@ -1,15 +1,16 @@
-import type { NextPage } from 'next';
+import type { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
-import withPrivateRoute from '../components/HOC/withAuth';
-import { useContext } from 'react';
-import { UserContext } from 'context/UserContext';
 import * as Style from '../styles/home';
 import Layout from 'components/layout';
 import Stories from 'components/stories';
 import { Grid } from '@mui/material';
+import { GET_CURRENT_USER } from 'gql/query/getCurrentUser';
+import CreateClient from 'utils/use-apollo';
+import * as Type from '../types/home';
 
-const Home: NextPage = () => {
-  const user = useContext(UserContext);
+const Home: NextPage<Type.MainPagePropTypes> = ({ user }) => {
+  console.log(user);
+
   return (
     <>
       <Head>
@@ -21,7 +22,12 @@ const Home: NextPage = () => {
         <Style.Wrapper>
           <Grid container>
             <Grid item md={7}>
-              <Stories />
+              {user.story && (
+                <Stories
+                  ownerStories={user?.story?.stories}
+                  profile_pic={user?.profile?.profile_pic}
+                />
+              )}
             </Grid>
           </Grid>
         </Style.Wrapper>
@@ -30,4 +36,29 @@ const Home: NextPage = () => {
   );
 };
 
-export default withPrivateRoute(Home);
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  const apollo = CreateClient(ctx);
+  console.log('from  getServerSideProps');
+
+  try {
+    const { data } = await apollo.query({
+      query: GET_CURRENT_USER,
+    });
+
+    return {
+      props: { user: data.getCurrentUser },
+    };
+  } catch (e) {
+    console.log(e);
+
+    return {
+      props: {},
+      redirect: {
+        permanent: false,
+        destination: '/login',
+      },
+    };
+  }
+};
+
+export default Home;

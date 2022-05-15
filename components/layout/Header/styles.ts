@@ -1,5 +1,7 @@
-import { alpha, InputBase, styled as muiStyled } from '@mui/material';
+import { alpha, InputBase, styled as muiStyled, SxProps } from '@mui/material';
+
 import styled from 'styled-components';
+import imageAddress from 'utils/imageAddress';
 
 export const Header = styled.header`
   height: 60px;
@@ -29,6 +31,12 @@ export const Header = styled.header`
     flex: 0.3;
     justify-content: space-around;
     align-items: center;
+  }
+`;
+
+export const ModalWrapper = styled.div`
+  .upload {
+    min-height: 750px;
   }
 `;
 
@@ -62,7 +70,6 @@ export const StyledInputBase = muiStyled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -71,3 +78,78 @@ export const StyledInputBase = muiStyled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
+export const StoryModalBoxStyle: SxProps = {
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 800,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  borderRadius: 2,
+};
+
+//start of StoryUploadStepOne components styles
+
+export const InputsWrapper = styled.div`
+  min-height: 750px;
+  max-height: 750px;
+
+  .header {
+    border-bottom: 1px solid rgba(219, 219, 219, 1);
+    text-align: center;
+    font-weight: 500;
+    padding: 1rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    svg {
+      position: absolute;
+      left: 20px;
+    }
+
+    button {
+      position: absolute;
+      right: 20px;
+    }
+  }
+
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 750px;
+    max-height: 750px;
+  }
+
+  .inputs-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+  }
+
+  .inputs {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .preview {
+    width: 800px;
+    height: 750px;
+
+    > img {
+      width: 100%;
+      height: 696px;
+      border-bottom-right-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
+  }
+`;

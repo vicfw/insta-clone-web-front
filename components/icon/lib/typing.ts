@@ -1,6 +1,13 @@
 import { CSSProperties } from 'react';
 
-export type Icon = 'home' | 'direct' | 'add_post' | 'location' | 'heart';
+export type Icon =
+  | 'home'
+  | 'direct'
+  | 'add_post'
+  | 'location'
+  | 'heart'
+  | 'media'
+  | 'back-arrow';
 
 export interface IconProps {
   name: Icon;
