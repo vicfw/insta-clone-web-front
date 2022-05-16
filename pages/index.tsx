@@ -7,9 +7,13 @@ import { Grid } from '@mui/material';
 import { GET_CURRENT_USER } from 'gql/query/getCurrentUser';
 import CreateClient from 'utils/use-apollo';
 import * as Type from '../types/home';
+import { UserContext } from 'context/UserContext';
+import { useContext } from 'react';
 
 const Home: NextPage<Type.MainPagePropTypes> = ({ user }) => {
-  console.log(user);
+  const { setUser } = useContext(UserContext);
+
+  setUser(user);
 
   return (
     <>
@@ -38,7 +42,6 @@ const Home: NextPage<Type.MainPagePropTypes> = ({ user }) => {
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const apollo = CreateClient(ctx);
-  console.log('from  getServerSideProps');
 
   try {
     const { data } = await apollo.query({

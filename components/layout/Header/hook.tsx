@@ -2,22 +2,32 @@ import { useMutation } from '@apollo/client';
 import { UserContext } from 'context/UserContext';
 import { CREATE_STORY } from 'gql/mutations/story';
 import { UPLOAD_FILE } from 'gql/mutations/upload';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { ChangeEvent, Dispatch, useContext, useState } from 'react';
 import fileSize from 'utils/fileSize';
-import { refreshData } from 'utils/refreshProps';
 
 export const useHeader = () => {
   const [showModal, setShowModal] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openMenu = Boolean(anchorEl);
+  const { user } = useContext(UserContext);
+
+  const handleClickMenu = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
 
   const handleModal = () => {
     setShowModal((perval) => !perval);
   };
 
   return {
-    val: { showModal },
+    val: { showModal, user, openMenu, anchorEl },
     set: { setShowModal },
-    on: { handleModal },
+    on: { handleModal, handleClickMenu, handleCloseMenu },
   };
 };
 
@@ -28,7 +38,7 @@ export const useUpload = (closeModalSetState: Dispatch<boolean>) => {
   const [showSnack, setShowSnack] = useState({ message: '', show: false });
   const router = useRouter();
 
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const [uploadFile] = useMutation(UPLOAD_FILE, {
     onCompleted: (data) => {

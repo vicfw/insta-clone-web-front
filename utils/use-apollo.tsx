@@ -6,10 +6,6 @@ import SnackAlert from 'components/Alert';
 import { setContext } from '@apollo/client/link/context';
 import { NextPageContext } from 'next';
 
-// export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
-
-// let apolloClient: ApolloClient<NormalizedCacheObject>;
-
 const { link: Link, useApolloNetworkStatus } = createNetworkStatusNotifier();
 
 //global error handler component or global error handler
@@ -31,7 +27,7 @@ const link = from([
   createUploadLink({
     uri: 'http://localhost:3000/graphql',
     credentials: 'include',
-  }),
+  }) as any,
 ]);
 
 const CreateClient = (ctx: NextPageContext | null) => {

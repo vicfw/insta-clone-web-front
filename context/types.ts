@@ -2,9 +2,15 @@ export interface UserType {
   id: number;
   email: string;
   username: string;
-  image_uri: string;
+  profile: {
+    id: number;
+    profile_pic: string;
+  };
   description: string;
   followers: number[];
   following: number[];
-  loading: boolean;
+  story: {
+    id: number;
+    stories: string[];
+  };
 }

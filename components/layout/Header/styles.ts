@@ -31,6 +31,11 @@ export const Header = styled.header`
     flex: 0.3;
     justify-content: space-around;
     align-items: center;
+
+    .profile {
+      border-radius: 50%;
+      cursor: pointer;
+    }
   }
 `;
 
