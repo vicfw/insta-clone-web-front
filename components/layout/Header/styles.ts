@@ -20,6 +20,10 @@ export const Header = styled.header`
     justify-content: space-between;
     max-width: 50%;
     min-width: 50%;
+
+    .img {
+      cursor: pointer;
+    }
   }
 
   .search {

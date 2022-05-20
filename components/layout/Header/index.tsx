@@ -38,7 +38,7 @@ const Header = () => {
         </Modal>
 
         <div className="inner-content">
-          <div className="img">
+          <div className="img" onClick={on.pushToHomePage}>
             <img src="images/instagram-homepage-logo.png" alt="logo" />
           </div>
 

@@ -6,11 +6,8 @@ import CreateClient, { GlobalLoadingIndicator } from 'utils/use-apollo';
 import { theme } from 'utils/theme';
 import { useRouter } from 'next/router';
 import { ContextProvider } from 'context/UserContext';
-import { NextPageContext } from 'next';
-import { GET_CURRENT_USER } from 'gql/query/getCurrentUser';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const router = useRouter();
   const client = CreateClient(null);
 
   return (
@@ -24,7 +21,5 @@ function MyApp({ Component, pageProps }: AppProps) {
     </ApolloProvider>
   );
 }
-
-
 
 export default MyApp;

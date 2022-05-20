@@ -10,7 +10,10 @@ export const useHeader = () => {
   const [showModal, setShowModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
+
   const { user } = useContext(UserContext);
+
+  const router = useRouter();
 
   const handleClickMenu = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -24,10 +27,14 @@ export const useHeader = () => {
     setShowModal((perval) => !perval);
   };
 
+  const pushToHomePage = () => {
+    router.push('/');
+  };
+
   return {
     val: { showModal, user, openMenu, anchorEl },
     set: { setShowModal },
-    on: { handleModal, handleClickMenu, handleCloseMenu },
+    on: { handleModal, handleClickMenu, handleCloseMenu, pushToHomePage },
   };
 };
 
