@@ -1,12 +1,9 @@
+import { Box } from '@mui/system';
 import styled from 'styled-components';
 
 export const Container = styled.div`
   .container {
     margin-top: 1.5rem;
-
-    .profile-pic {
-      border-radius: 50%;
-    }
 
     .username {
       display: block;
@@ -26,4 +23,15 @@ export const Container = styled.div`
       gap: 30px;
     }
   }
+`;
+
+export const MaterialBox = styled(Box)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: white;
+  border-radius: 6px;
+  padding: 20px 30px;
 `;
