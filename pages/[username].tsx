@@ -24,8 +24,8 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
           <Grid container className="container">
             <Grid item md={4}>
               <Image
-                width={180}
-                height={180}
+                width={150}
+                height={150}
                 src={imageAddress(user?.profile?.profile_pic)}
                 className="profile-pic"
               />
@@ -64,6 +64,29 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
               </Grid>
             </Grid>
           </Grid>
+          <Grid container className="mt-3">
+            <Grid item lg={4}>
+              <Image
+                src={imageAddress(user.profile.profile_pic)}
+                width={200}
+                height={200}
+              />
+            </Grid>
+            <Grid item lg={4}>
+              <Image
+                src={imageAddress(user.profile.profile_pic)}
+                width={200}
+                height={200}
+              />
+            </Grid>
+            <Grid item lg={4}>
+              <Image
+                src={imageAddress(user.profile.profile_pic)}
+                width={200}
+                height={200}
+              />
+            </Grid>
+          </Grid>
         </Style.Container>
       </Layout>
     </>
@@ -74,8 +97,6 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
   const apollo = CreateClient(ctx);
 
   const username = ctx.query?.username as string;
-
-  console.log(username, 'username');
 
   try {
     const { data } = await apollo.query({
