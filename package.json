@@ -24,6 +24,7 @@
     "react": "18.0.0",
     "react-apollo-network-status": "^5.1.0",
     "react-dom": "18.0.0",
+    "sharp": "^0.30.5",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

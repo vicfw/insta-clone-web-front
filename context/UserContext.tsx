@@ -18,6 +18,7 @@ const initialState = {
     id: 0,
     stories: [],
   },
+  name: '',
   loading: false,
 };
 

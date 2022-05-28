@@ -12,7 +12,6 @@ import { useContext } from 'react';
 
 const Home: NextPage<Type.MainPagePropTypes> = ({ user }) => {
   const { setUser } = useContext(UserContext);
-
   setUser(user);
 
   return (
@@ -26,7 +25,7 @@ const Home: NextPage<Type.MainPagePropTypes> = ({ user }) => {
         <Style.Wrapper>
           <Grid container>
             <Grid item md={7}>
-              {user.story && (
+              {user?.story && (
                 <Stories
                   ownerStories={user?.story?.stories}
                   profile_pic={user?.profile?.profile_pic}

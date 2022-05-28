@@ -7,8 +7,6 @@ import * as Types from './types';
 import imageAddress from 'utils/imageAddress';
 
 const Stories: FC<Types.StoriesProps> = ({ ownerStories, profile_pic }) => {
-  console.log(ownerStories, 'ownerStories');
-
   return (
     <Style.Wrapper>
       <Carousel

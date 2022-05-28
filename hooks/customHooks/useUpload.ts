@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { UserContext } from 'context/UserContext';
+import { UPDATE_PROFILE } from 'gql/mutations/profile';
 import { UPLOAD_FILE } from 'gql/mutations/upload';
 import { useRouter } from 'next/router';
 import { ChangeEvent, Dispatch, useContext, useState } from 'react';

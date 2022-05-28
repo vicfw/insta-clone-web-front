@@ -2,7 +2,6 @@ export interface User {
   id: number;
   email: string;
   username: string;
-  image_uri: string;
   profile: {
     id: number;
     profile_pic: string;
@@ -14,4 +13,5 @@ export interface User {
     id: number;
     stories: string[];
   };
+  name: string;
 }
