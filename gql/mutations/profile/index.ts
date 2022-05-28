@@ -21,11 +21,14 @@ export const UPDATE_PROFILE = gql`
     ) {
       id
       email
-      password
       description
       followers
       following
       username
+      profile {
+        profile_pic
+        name
+      }
     }
   }
 `;

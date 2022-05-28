@@ -44,6 +44,7 @@ export const useUpload = () => {
 
   return {
     get: { imageName, showSnack },
+    set: { setImageName },
     on: { handleUploadInputChange },
   };
 };

@@ -59,7 +59,7 @@ const Header = () => {
             <Icon name="location" color="#262626" />
             <Icon name="heart" color="#262626" />
             <Image
-              src={imageAddress(val.user.profile.profile_pic)}
+              src={imageAddress(val.user.profile?.profile_pic)}
               width={30}
               height={30}
               objectFit="cover"

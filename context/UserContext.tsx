@@ -1,7 +1,7 @@
-import { useQuery } from '@apollo/client';
-import { GET_CURRENT_USER } from 'gql/query/getCurrentUser';
-import React, { createContext, Dispatch, useEffect, useState } from 'react';
+import React, { createContext, Dispatch, useReducer } from 'react';
 import { UserType } from './types';
+import * as Type from './types';
+import { userReducer } from './userReducer';
 
 const initialState = {
   id: 0,
@@ -10,6 +10,7 @@ const initialState = {
   profile: {
     id: 0,
     profile_pic: '',
+    name: '',
   },
   description: '',
   followers: [],
@@ -18,23 +19,23 @@ const initialState = {
     id: 0,
     stories: [],
   },
-  name: '',
+
   loading: false,
 };
 
 const UserContext = createContext<{
-  setUser: Dispatch<UserType>;
-  user: UserType;
+  dispatch: Dispatch<Type.Action>;
+  state: UserType;
 }>({
-  setUser: () => {},
-  user: initialState,
+  dispatch: () => {},
+  state: initialState,
 });
 
 const ContextProvider = ({ children, client }: any) => {
-  const [user, setUser] = useState<UserType>(initialState);
+  const [state, dispatch] = useReducer(userReducer, initialState);
 
   return (
-    <UserContext.Provider value={{ setUser, user }}>
+    <UserContext.Provider value={{ state, dispatch }}>
       {children}
     </UserContext.Provider>
   );

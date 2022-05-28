@@ -8,12 +8,13 @@ import { GET_CURRENT_USER } from 'gql/query/getCurrentUser';
 import CreateClient from 'utils/use-apollo';
 import * as Type from '../types/home';
 import { UserContext } from 'context/UserContext';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 const Home: NextPage<Type.MainPagePropTypes> = ({ user }) => {
-  const { setUser } = useContext(UserContext);
-  setUser(user);
-
+  const { dispatch } = useContext(UserContext);
+  useEffect(() => {
+    dispatch({ type: 'SET_USER', payload: user });
+  }, []);
   return (
     <>
       <Head>

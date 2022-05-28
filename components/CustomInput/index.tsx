@@ -7,7 +7,7 @@ export default (props: InputBaseProps) => {
       {/* <InputLabel shrink htmlFor="customInput">
         Bootstrap
       </InputLabel> */}
-      <Input defaultValue="" id="customInput" {...props} />
+      <Input id="customInput" {...props} />
     </>
   );
 };

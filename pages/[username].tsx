@@ -15,7 +15,7 @@ import Image from 'next/image';
 import { NextPageContext } from 'next';
 import CreateClient from 'utils/use-apollo';
 import { GET_CURRENT_USER_BY_USERNAME } from 'gql/query/getCurrentUserByUsername';
-import { FC, useContext } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import * as Type from 'types/profile';
 import imageAddress from 'utils/imageAddress';
 import * as Hook from 'hooks/profile';
@@ -26,10 +26,7 @@ import CustomInput from 'components/CustomInput';
 const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
   const { query } = useRouter();
 
-  const { setUser } = useContext(UserContext);
-  setUser(user);
-
-  const { get, set, on } = Hook.useProfile();
+  const { get, set, on } = Hook.useProfile(user);
 
   return (
     <>
@@ -43,12 +40,21 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
             open={get.openEditProfileModal}
             onClose={on.handleEditProfileModalClose}
           >
-            <Style.MaterialBox>
+            <Style.MaterialBox
+              onSubmit={(e) => {
+                e.preventDefault();
+                on.handleUpdateProfile();
+              }}
+            >
               {/* profile pic */}
               <Grid container alignItems="center">
                 <Grid item lg={3}>
                   <ProfilePicture
-                    imagePath={user.profile.profile_pic}
+                    imagePath={
+                      get.uploadedImageName
+                        ? get.uploadedImageName
+                        : user.profile.profile_pic
+                    }
                     width={50}
                     height={50}
                   />
@@ -73,8 +79,13 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
                       }}
                     />
                   </Button>
+
+                  {get.uploadedImageName && (
+                    <Typography color="green" fontSize={12}>
+                      Profile picture uploaded!
+                    </Typography>
+                  )}
                 </Grid>
-                {/* name section */}
               </Grid>
               {/* username */}
               <Grid container alignItems="center" marginTop={2}>
@@ -92,7 +103,7 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
                 <Grid item lg={4}>
                   <CustomInput
                     size="small"
-                    value={get.username}
+                    value={get.username || ''}
                     onChange={(e) => set.setUsername(e.target.value)}
                   />
                   {!get.username && (
@@ -117,7 +128,7 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
                 <Grid item lg={4}>
                   <CustomInput
                     size="small"
-                    value={get.name}
+                    value={get.name || ''}
                     onChange={(e) => set.setName(e.target.value)}
                   />
                 </Grid>
@@ -137,7 +148,7 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
                 <Grid item lg={4}>
                   <CustomInput
                     size="small"
-                    value={get.description}
+                    value={get.description || ''}
                     onChange={(e) => set.setDescription(e.target.value)}
                   />
                 </Grid>
@@ -146,7 +157,7 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
               <Grid container justifyContent={'center'} marginTop={2}>
                 <Button
                   variant="contained"
-                  onClick={on.handleUpdateProfile}
+                  type="submit"
                   sx={{ textTransform: 'unset' }}
                 >
                   Submit

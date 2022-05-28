@@ -5,6 +5,7 @@ export interface User {
   profile: {
     id: number;
     profile_pic: string;
+    name: string;
   };
   description: string;
   followers: number[];
@@ -13,5 +14,4 @@ export interface User {
     id: number;
     stories: string[];
   };
-  name: string;
 }

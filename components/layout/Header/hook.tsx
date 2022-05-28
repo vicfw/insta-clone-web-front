@@ -11,7 +11,7 @@ export const useHeader = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
 
-  const { user } = useContext(UserContext);
+  const { state: user } = useContext(UserContext);
 
   const router = useRouter();
 
@@ -45,7 +45,7 @@ export const useUpload = (closeModalSetState: Dispatch<boolean>) => {
   const [showSnack, setShowSnack] = useState({ message: '', show: false });
   const router = useRouter();
 
-  const { user } = useContext(UserContext);
+  const { state: user } = useContext(UserContext);
 
   const [uploadFile] = useMutation(UPLOAD_FILE, {
     onCompleted: (data) => {

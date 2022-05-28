@@ -25,7 +25,7 @@ export const Container = styled.div`
   }
 `;
 
-export const MaterialBox = styled(Box)`
+export const MaterialBox = styled('form')`
   position: absolute;
   top: 50%;
   left: 50%;
