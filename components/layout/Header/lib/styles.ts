@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import imageAddress from 'utils/imageAddress';
 
 export const Header = styled.header`
+  position: relative;
+  z-index: 100;
   height: 60px;
   position: fixed;
   top: 0;
@@ -46,6 +48,46 @@ export const Header = styled.header`
 export const ModalWrapper = styled.div`
   .upload {
     min-height: 750px;
+  }
+`;
+
+export const ResultBox = styled.div`
+  width: 375px;
+  height: 362px;
+  position: absolute;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 3px 6px 0px #ccc;
+  right: -47px;
+  bottom: 0;
+  top: 50px;
+  z-index: 99;
+  ::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    box-shadow: 0 0 5px 1px #ccc;
+    background-color: #fff;
+    left: 47%;
+    top: -6px;
+    transform: rotate(45deg);
+  }
+
+  .user {
+    display: flex;
+    cursor: pointer;
+    padding: 10px 20px;
+    align-items: center;
+    :hover {
+      background-color: #fafafa;
+    }
+    .status {
+      margin-left: 10px;
+      p:last-child {
+        color: #ccc;
+      }
+    }
   }
 `;
 

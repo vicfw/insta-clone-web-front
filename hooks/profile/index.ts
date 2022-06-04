@@ -19,6 +19,7 @@ export const useProfile = (ssrUser: User) => {
   const router = useRouter();
   const { get, on, set } = useUpload();
 
+  //updateProfile mutation
   const [updateProfile] = useMutation(UPDATE_PROFILE, {
     onCompleted: (data) => {
       const newUsername = data.updateProfile?.username;

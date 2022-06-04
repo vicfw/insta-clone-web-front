@@ -182,7 +182,11 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
                     variant="outlined"
                     color="secondary"
                     size="small"
-                    sx={{ textTransform: 'unset', fontWeight: 600 }}
+                    sx={{
+                      textTransform: 'unset',
+                      fontWeight: 600,
+                      position: 'unset',
+                    }}
                     onClick={on.handleEditProfileModalOpen}
                   >
                     Edit Profile
@@ -216,6 +220,10 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
                 src={imageAddress(user.profile.profile_pic)}
                 width={200}
                 height={200}
+                objectFit="cover"
+                layout="fixed"
+                objectPosition="center"
+                alt="sss"
               />
             </Grid>
             <Grid item lg={4}>
@@ -223,6 +231,9 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
                 src={imageAddress(user.profile.profile_pic)}
                 width={200}
                 height={200}
+                objectFit="cover"
+                layout="fixed"
+                alt="sss"
               />
             </Grid>
             <Grid item lg={4}>
@@ -230,6 +241,10 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
                 src={imageAddress(user.profile.profile_pic)}
                 width={200}
                 height={200}
+                objectFit="cover"
+                layout="fixed"
+                objectPosition="center"
+                alt="sss"
               />
             </Grid>
           </Grid>

@@ -36,3 +36,8 @@ a {
 .mt-3 {
   margin-top: 3rem;
 }
+
+.profile {
+  border-radius: 50%;
+  cursor: pointer;
+}

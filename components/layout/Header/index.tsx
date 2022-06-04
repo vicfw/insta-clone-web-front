@@ -1,19 +1,17 @@
 import SearchIcon from '@mui/icons-material/Search';
-import * as Style from './styles';
+import * as Style from './lib/styles';
 import { Icon } from 'components/icon';
 import {
-  Button,
   Divider,
   ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
   Modal,
-  Paper,
 } from '@mui/material';
-import * as useHook from './hook';
-import * as Component from './components';
 import { Box } from '@mui/system';
+import * as Component from './lib/components';
+import * as useHook from './lib/hook';
 import Image from 'next/image';
 import imageAddress from 'utils/imageAddress';
 import { useRouter } from 'next/router';
@@ -41,14 +39,35 @@ const Header = () => {
           <div className="img" onClick={on.pushToHomePage}>
             <img src="images/instagram-homepage-logo.png" alt="logo" />
           </div>
-
+          {/* search */}
           <Style.Search className="search">
             <Style.SearchIconWrapper>
               <SearchIcon sx={{ color: '#8E8E8E' }} />
             </Style.SearchIconWrapper>
+            <Style.ResultBox>
+              {val.searchResult.length
+                ? val.searchResult.map((result) => {
+                    return (
+                      <div className="user" key={result.id}>
+                        <Image
+                          src={imageAddress(result.imagePath)}
+                          width={50}
+                          height={50}
+                          className="profile"
+                        />
+                        <div className="status">
+                          <p>{result.username}</p>
+                          <p>{result.name}</p>
+                        </div>
+                      </div>
+                    );
+                  })
+                : 'empty'}
+            </Style.ResultBox>
             <Style.StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={on.handleSearch}
             />
           </Style.Search>
 

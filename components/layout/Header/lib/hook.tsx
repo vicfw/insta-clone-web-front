@@ -1,19 +1,56 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { UserContext } from 'context/UserContext';
 import { CREATE_STORY } from 'gql/mutations/story';
 import { UPLOAD_FILE } from 'gql/mutations/upload';
+import { SEARCH_USER } from 'gql/query/searchUser';
 import { useRouter } from 'next/router';
-import { ChangeEvent, Dispatch, useContext, useState } from 'react';
+import { ChangeEvent, Dispatch, useContext, useEffect, useState } from 'react';
 import fileSize from 'utils/fileSize';
-
+import * as Type from './types';
 export const useHeader = () => {
   const [showModal, setShowModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [searchResult, setSearchResult] = useState<Type.SearchResultType[]>([
+    { id: 0, imagePath: '', name: '', username: '' },
+  ]);
 
   const { state: user } = useContext(UserContext);
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (!searchQuery) {
+      setSearchResult([]);
+    }
+  }, [searchQuery]);
+
+  console.log(searchResult, 'searchResult');
+
+  const { loading, data } = useQuery(SEARCH_USER, {
+    onCompleted: (response) => {
+      console.log(response, 'response');
+      // console.log(typeof searchQuery, 'searchQuery');
+
+      const transformedData = response.searchByUsername.map((user: any) => {
+        return {
+          id: user.id,
+          imagePath: user.profile.profile_pic,
+          name: user.profile.name,
+          username: user.username,
+        };
+      });
+
+      setSearchResult(transformedData);
+    },
+    variables: { username: searchQuery },
+  });
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
 
   const handleClickMenu = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -32,9 +69,15 @@ export const useHeader = () => {
   };
 
   return {
-    val: { showModal, user, openMenu, anchorEl },
+    val: { showModal, user, openMenu, anchorEl, searchResult },
     set: { setShowModal },
-    on: { handleModal, handleClickMenu, handleCloseMenu, pushToHomePage },
+    on: {
+      handleModal,
+      handleClickMenu,
+      handleCloseMenu,
+      pushToHomePage,
+      handleSearch,
+    },
   };
 };
 
