@@ -7,7 +7,7 @@ import { refreshData } from 'utils/refreshProps';
 import { useRouter } from 'next/router';
 import { User } from 'types/global';
 
-export const useProfile = (ssrUser: User) => {
+export const useProfile = (ssrUser: User, currentUser: User) => {
   //local state
   const [openEditProfileModal, setOpenEditProfileModal] = useState(false);
   const [username, setUsername] = useState('');
@@ -69,7 +69,7 @@ export const useProfile = (ssrUser: User) => {
   }, [get.imageName]);
 
   useEffect(() => {
-    dispatch({ type: 'SET_USER', payload: ssrUser });
+    dispatch({ type: 'SET_USER', payload: currentUser });
   }, []);
 
   return {

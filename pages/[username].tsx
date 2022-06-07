@@ -22,11 +22,12 @@ import * as Hook from 'hooks/profile';
 import ProfilePicture from 'components/ProfilePicture';
 import { UserContext } from 'context/UserContext';
 import CustomInput from 'components/CustomInput';
+import { GET_CURRENT_USER } from 'gql/query/getCurrentUser';
 
-const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
+const Profile: FC<Type.ProfilePageProps> = ({ user, currentUser }) => {
   const { query } = useRouter();
 
-  const { get, set, on } = Hook.useProfile(user);
+  const { get, set, on } = Hook.useProfile(user, currentUser);
 
   return (
     <>
@@ -223,7 +224,7 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
                 objectFit="cover"
                 layout="fixed"
                 objectPosition="center"
-                alt="sss"
+                alt={user.profile.profile_pic}
               />
             </Grid>
             <Grid item lg={4}>
@@ -233,7 +234,7 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
                 height={200}
                 objectFit="cover"
                 layout="fixed"
-                alt="sss"
+                alt={user.profile.profile_pic}
               />
             </Grid>
             <Grid item lg={4}>
@@ -244,7 +245,7 @@ const Profile: FC<Type.ProfilePageProps> = ({ user }) => {
                 objectFit="cover"
                 layout="fixed"
                 objectPosition="center"
-                alt="sss"
+                alt={user.profile.profile_pic}
               />
             </Grid>
           </Grid>
@@ -260,15 +261,32 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
   const username = ctx.query?.username as string;
 
   try {
-    const { data } = await apollo.query({
+    const { data: user } = await apollo.query({
       query: GET_CURRENT_USER_BY_USERNAME,
       variables: { username },
     });
 
+    const { data: currentUser } = await apollo.query({
+      query: GET_CURRENT_USER,
+    });
+
     return {
-      props: { user: data.getOneUserByUsername },
+      props: {
+        user: user.getOneUserByUsername,
+        currentUser: currentUser.getCurrentUser,
+      },
     };
-  } catch (e) {
+  } catch (e: any) {
+    if (e.message.includes('getOneUserByUsername')) {
+      return {
+        props: {},
+        redirect: {
+          permanent: false,
+          destination: '/404',
+        },
+      };
+    }
+
     return {
       props: {},
       redirect: {

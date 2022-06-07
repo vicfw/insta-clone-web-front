@@ -6,5 +6,5 @@ export interface HomePropTypes {
 }
 
 export interface MainPagePropTypes {
-  user: User
+  currentUser: User;
 }

@@ -7,7 +7,7 @@ export const SEARCH_USER = gql`
       id
       profile {
         profile_pic
-        name
+        name    
       }
     }
   }

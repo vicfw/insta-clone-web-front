@@ -27,13 +27,8 @@ export const useHeader = () => {
     }
   }, [searchQuery]);
 
-  console.log(searchResult, 'searchResult');
-
   const { loading, data } = useQuery(SEARCH_USER, {
     onCompleted: (response) => {
-      console.log(response, 'response');
-      // console.log(typeof searchQuery, 'searchQuery');
-
       const transformedData = response.searchByUsername.map((user: any) => {
         return {
           id: user.id,

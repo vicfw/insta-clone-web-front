@@ -10,26 +10,28 @@ import * as Type from '../types/home';
 import { UserContext } from 'context/UserContext';
 import { useContext, useEffect } from 'react';
 
-const Home: NextPage<Type.MainPagePropTypes> = ({ user }) => {
+const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser }) => {
   const { dispatch } = useContext(UserContext);
   useEffect(() => {
-    dispatch({ type: 'SET_USER', payload: user });
+    dispatch({ type: 'SET_USER', payload: currentUser });
   }, []);
   return (
     <>
       <Head>
         <title>
-          {!user?.username ? 'Instagram' : ` Welcome ${user?.username}`}
+          {!currentUser?.username
+            ? 'Instagram'
+            : ` Welcome ${currentUser?.username}`}
         </title>
       </Head>
       <Layout>
         <Style.Wrapper>
           <Grid container>
             <Grid item md={7}>
-              {user?.story && (
+              {currentUser?.story && (
                 <Stories
-                  ownerStories={user?.story?.stories}
-                  profile_pic={user?.profile?.profile_pic}
+                  ownerStories={currentUser?.story?.stories}
+                  profile_pic={currentUser?.profile?.profile_pic}
                 />
               )}
             </Grid>
@@ -53,7 +55,6 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     };
   } catch (e) {
     console.log(e);
-
     return {
       props: {},
       redirect: {
