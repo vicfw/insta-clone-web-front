@@ -11,6 +11,8 @@ import { UserContext } from 'context/UserContext';
 import { useContext, useEffect } from 'react';
 
 const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser }) => {
+  console.log(currentUser);
+
   const { dispatch } = useContext(UserContext);
   useEffect(() => {
     dispatch({ type: 'SET_USER', payload: currentUser });
@@ -50,8 +52,10 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
       query: GET_CURRENT_USER,
     });
 
+    console.log(data, 'darta');
+
     return {
-      props: { user: data.getCurrentUser },
+      props: { currentUser: data.getCurrentUser },
     };
   } catch (e) {
     console.log(e);

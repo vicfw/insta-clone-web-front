@@ -9,8 +9,6 @@ export const SIGNUP = gql`
       email
       password
       description
-      followers
-      following
       username
     }
   }

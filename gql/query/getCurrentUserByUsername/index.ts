@@ -7,14 +7,24 @@ export const GET_CURRENT_USER_BY_USERNAME = gql`
       email
       username
       description
-      followers
-      following
       profile {
         id
         profile_pic
+        name
       }
       story {
         stories
+      }
+      following {
+        userId
+        id
+        followedUserId
+      }
+
+      follower {
+        id
+        userId
+        followerUserId
       }
     }
   }

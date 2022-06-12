@@ -29,6 +29,8 @@ const Profile: FC<Type.ProfilePageProps> = ({ user, currentUser }) => {
 
   const { get, set, on } = Hook.useProfile(user, currentUser);
 
+  console.log(user);
+
   return (
     <>
       <Head>
@@ -179,19 +181,35 @@ const Profile: FC<Type.ProfilePageProps> = ({ user, currentUser }) => {
               <Grid container>
                 <Grid item md={12} className="flex">
                   <h2 className="username">{user.username}</h2>
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    size="small"
-                    sx={{
-                      textTransform: 'unset',
-                      fontWeight: 600,
-                      position: 'unset',
-                    }}
-                    onClick={on.handleEditProfileModalOpen}
-                  >
-                    Edit Profile
-                  </Button>
+                  {currentUser?.username === user.username ? (
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      size="small"
+                      sx={{
+                        textTransform: 'unset',
+                        fontWeight: 600,
+                        position: 'unset',
+                      }}
+                      onClick={on.handleEditProfileModalOpen}
+                    >
+                      Edit Profile
+                    </Button>
+                  ) : (
+                    <Button
+                      variant={get.isAFollower ? 'outlined' : 'contained'}
+                      color="primary"
+                      size="small"
+                      sx={{
+                        textTransform: 'unset',
+                        fontWeight: 600,
+                        position: 'unset',
+                      }}
+                      onClick={on.handleFollowUser}
+                    >
+                      {get.isAFollower ? 'Unfollow' : 'Follow'}
+                    </Button>
+                  )}
                 </Grid>
 
                 <Grid item md={12} className="flex status">
@@ -199,14 +217,14 @@ const Profile: FC<Type.ProfilePageProps> = ({ user, currentUser }) => {
                     <b>10</b> posts
                   </span>
                   <span>
-                    <b>10</b> posts followers
+                    <b>{user.follower.length}</b> followers
                   </span>
                   <span>
-                    <b>10</b> posts following
+                    <b>{user.following.length}</b> following
                   </span>
                 </Grid>
                 <Grid item md={12} className="mt-1">
-                  <span>name</span>
+                  <span>{user?.profile?.name}</span>
                   <p className="description mt-0">
                     {user.description ?? 'description'}
                   </p>

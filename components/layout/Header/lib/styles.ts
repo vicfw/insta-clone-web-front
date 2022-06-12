@@ -89,10 +89,22 @@ export const ResultBox = styled.div`
       }
     }
   }
+
+  .not-found {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .text {
+      color: #ccc;
+    }
+  }
 `;
 
 export const Search = muiStyled('div')(({ theme }) => ({
   position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: '#EFEFEF',
   '&:hover': {

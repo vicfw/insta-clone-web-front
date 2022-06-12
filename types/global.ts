@@ -1,3 +1,15 @@
+export interface Following {
+  id: number;
+  followedUserId: number;
+  userId: number;
+}
+
+export interface Followers {
+  id: number;
+  followerUserId: number;
+  userId: number;
+}
+
 export interface User {
   id: number;
   email: string;
@@ -8,10 +20,12 @@ export interface User {
     name: string;
   };
   description: string;
-  followers: number[];
-  following: number[];
+
   story: {
     id: number;
     stories: string[];
   };
+
+  following: Following[];
+  follower: Followers[];
 }

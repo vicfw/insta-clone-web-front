@@ -4,7 +4,14 @@ import { CREATE_STORY } from 'gql/mutations/story';
 import { UPLOAD_FILE } from 'gql/mutations/upload';
 import { SEARCH_USER } from 'gql/query/searchUser';
 import { useRouter } from 'next/router';
-import { ChangeEvent, Dispatch, useContext, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  MouseEvent,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import fileSize from 'utils/fileSize';
 import * as Type from './types';
 export const useHeader = () => {
@@ -37,7 +44,7 @@ export const useHeader = () => {
           username: user.username,
         };
       });
-
+      setSearchLoading(loading);
       setSearchResult(transformedData);
     },
     variables: { username: searchQuery },
@@ -59,12 +66,28 @@ export const useHeader = () => {
     setShowModal((perval) => !perval);
   };
 
+  const handleCloseSearchBox = () => {
+    const searchBox = document.getElementById('search-box')!;
+    if (searchBox) {
+      setSearchQuery('');
+      searchBox.style.display = 'none';
+    }
+  };
+
   const pushToHomePage = () => {
     router.push('/');
   };
 
   return {
-    val: { showModal, user, openMenu, anchorEl, searchResult },
+    val: {
+      showModal,
+      user,
+      openMenu,
+      anchorEl,
+      searchResult,
+      loading,
+      searchQuery,
+    },
     set: { setShowModal },
     on: {
       handleModal,
@@ -72,6 +95,7 @@ export const useHeader = () => {
       handleCloseMenu,
       pushToHomePage,
       handleSearch,
+      handleCloseSearchBox,
     },
   };
 };

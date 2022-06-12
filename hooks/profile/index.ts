@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useUpload } from 'hooks/customHooks/useUpload';
 import { useMutation } from '@apollo/client';
 import { UPDATE_PROFILE } from 'gql/mutations/profile';
@@ -6,6 +6,7 @@ import { UserContext } from 'context/UserContext';
 import { refreshData } from 'utils/refreshProps';
 import { useRouter } from 'next/router';
 import { User } from 'types/global';
+import { FOLLOW_USER } from 'gql/mutations/followUser';
 
 export const useProfile = (ssrUser: User, currentUser: User) => {
   //local state
@@ -14,10 +15,14 @@ export const useProfile = (ssrUser: User, currentUser: User) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [profile_pic, setProfile_pic] = useState('');
+  const [isAFollower, setIsAFollower] = useState(false);
+
   //utils
-  const { state: user, dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
   const router = useRouter();
   const { get, on, set } = useUpload();
+
+  console.log(ssrUser, 'ssrUser');
 
   //updateProfile mutation
   const [updateProfile] = useMutation(UPDATE_PROFILE, {
@@ -33,6 +38,23 @@ export const useProfile = (ssrUser: User, currentUser: User) => {
       router.replace(router.asPath);
     },
   });
+  // follow a user
+  const [followUser] = useMutation(FOLLOW_USER, {
+    onCompleted: () => {
+      setIsAFollower(true);
+    },
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
+  const isAFollowerHandler = () => {
+    const follower = currentUser?.following?.some((following) => {
+      return following.followedUserId === ssrUser.id;
+    });
+
+    setIsAFollower(follower);
+  };
 
   const handleEditProfileModalOpen = () => {
     setOpenEditProfileModal(true);
@@ -42,26 +64,40 @@ export const useProfile = (ssrUser: User, currentUser: User) => {
     setOpenEditProfileModal(false);
   };
 
+  const updateProfileVariables = Object.assign(
+    {},
+    {
+      profile_id: ssrUser?.profile.id,
+      user_id: ssrUser?.id,
+      profile_pic: profile_pic ? profile_pic : undefined,
+      name: name ? name : undefined,
+      username: username ? username : undefined,
+      description: description ? description : undefined,
+    }
+  );
+
   const handleUpdateProfile = () => {
     updateProfile({
-      variables: {
-        profile_id: user?.profile.id,
-        user_id: user?.id,
-        profile_pic,
-        name,
-        username,
-        description,
-      },
+      variables: updateProfileVariables,
     }).then(() => {
       set.setImageName('');
     });
   };
 
+  const handleFollowUser = () => {
+    followUser({
+      variables: {
+        followedUserId: ssrUser.id,
+        userId: currentUser.id,
+      },
+    });
+  };
+
   useEffect(() => {
-    setUsername(user.username);
-    setName(user.profile.name);
-    setDescription(user.description);
-    setProfile_pic(user.profile.profile_pic);
+    setUsername(ssrUser.username);
+    setName(ssrUser.profile.name);
+    setDescription(ssrUser.description);
+    setProfile_pic(ssrUser.profile.profile_pic);
   }, [openEditProfileModal]);
 
   useEffect(() => {
@@ -72,6 +108,12 @@ export const useProfile = (ssrUser: User, currentUser: User) => {
     dispatch({ type: 'SET_USER', payload: currentUser });
   }, []);
 
+  useEffect(() => {
+    console.log('rand');
+
+    isAFollowerHandler();
+  }, [ssrUser]);
+
   return {
     get: {
       openEditProfileModal,
@@ -80,6 +122,7 @@ export const useProfile = (ssrUser: User, currentUser: User) => {
       name,
       description,
       uploadedImageName: get.imageName,
+      isAFollower,
     },
     set: { setUsername, setName, setDescription },
     on: {
@@ -87,6 +130,7 @@ export const useProfile = (ssrUser: User, currentUser: User) => {
       handleEditProfileModalOpen,
       handleProfilePictureUpload: on.handleUploadInputChange,
       handleUpdateProfile,
+      handleFollowUser,
     },
   };
 };

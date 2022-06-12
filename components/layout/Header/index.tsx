@@ -2,7 +2,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import * as Style from './lib/styles';
 import { Icon } from 'components/icon';
 import {
+  CircularProgress,
   Divider,
+  dividerClasses,
   ListItemIcon,
   ListItemText,
   Menu,
@@ -15,6 +17,7 @@ import * as useHook from './lib/hook';
 import Image from 'next/image';
 import imageAddress from 'utils/imageAddress';
 import { useRouter } from 'next/router';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Header = () => {
   const { on, val, set } = useHook.useHeader();
@@ -44,11 +47,19 @@ const Header = () => {
             <Style.SearchIconWrapper>
               <SearchIcon sx={{ color: '#8E8E8E' }} />
             </Style.SearchIconWrapper>
-            <Style.ResultBox>
-              {val.searchResult.length
-                ? val.searchResult.map((result) => {
+            {val.searchQuery.length ? (
+              <Style.ResultBox id="search-box">
+                {val.searchResult.length ? (
+                  val.searchResult.map((result) => {
                     return (
-                      <div className="user" key={result.id}>
+                      <div
+                        className="user"
+                        key={result.id}
+                        onClick={() => {
+                          router.push(result.username);
+                          on.handleCloseSearchBox();
+                        }}
+                      >
                         <Image
                           src={imageAddress(result.imagePath)}
                           width={50}
@@ -62,13 +73,37 @@ const Header = () => {
                       </div>
                     );
                   })
-                : 'empty'}
-            </Style.ResultBox>
+                ) : val.loading ? (
+                  <div className="not-found">
+                    <CircularProgress color="primary" />
+                  </div>
+                ) : (
+                  <div className="not-found">
+                    <span className="text">There is no user found!</span>
+                  </div>
+                )}
+              </Style.ResultBox>
+            ) : null}
+
             <Style.StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              value={val.searchQuery}
               onChange={on.handleSearch}
+              id="search-input"
             />
+            {val.searchQuery.length ? (
+              <CloseIcon
+                sx={{
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontSize: 15,
+                  backgroundColor: '#ccc',
+                  borderRadius: '50%',
+                }}
+                onClick={on.handleCloseSearchBox}
+              />
+            ) : null}
           </Style.Search>
 
           <div className="actions">
@@ -78,7 +113,7 @@ const Header = () => {
             <Icon name="location" color="#262626" />
             <Icon name="heart" color="#262626" />
             <Image
-              src={imageAddress(val.user.profile?.profile_pic)}
+              src={imageAddress(val.user?.profile?.profile_pic)}
               width={30}
               height={30}
               objectFit="cover"

@@ -22,8 +22,6 @@ export const UPDATE_PROFILE = gql`
       id
       email
       description
-      followers
-      following
       username
       profile {
         profile_pic

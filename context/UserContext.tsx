@@ -13,8 +13,8 @@ const initialState = {
     name: '',
   },
   description: '',
-  followers: [],
-  following: [],
+  following: [{ id: 0, userId: 0, followedUserId: 0 }],
+  follower: [{ id: 0, userId: 0, followerUserId: 0 }],
   story: {
     id: 0,
     stories: [],
