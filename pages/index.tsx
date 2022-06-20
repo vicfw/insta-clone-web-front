@@ -11,8 +11,6 @@ import { UserContext } from 'context/UserContext';
 import { useContext, useEffect } from 'react';
 
 const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser }) => {
-  console.log(currentUser);
-
   const { dispatch } = useContext(UserContext);
   useEffect(() => {
     dispatch({ type: 'SET_USER', payload: currentUser });
@@ -51,8 +49,6 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     const { data } = await apollo.query({
       query: GET_CURRENT_USER,
     });
-
-    console.log(data, 'darta');
 
     return {
       props: { currentUser: data.getCurrentUser },

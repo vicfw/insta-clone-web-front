@@ -7,6 +7,7 @@ import { refreshData } from 'utils/refreshProps';
 import { useRouter } from 'next/router';
 import { User } from 'types/global';
 import { FOLLOW_USER } from 'gql/mutations/followUser';
+import { REMOVE_FOLLOWER, REMOVE_FOLLOWING } from 'gql/mutations/unFollowUser';
 
 export const useProfile = (ssrUser: User, currentUser: User) => {
   //local state
@@ -22,8 +23,6 @@ export const useProfile = (ssrUser: User, currentUser: User) => {
   const router = useRouter();
   const { get, on, set } = useUpload();
 
-  console.log(ssrUser, 'ssrUser');
-
   //updateProfile mutation
   const [updateProfile] = useMutation(UPDATE_PROFILE, {
     onCompleted: (data) => {
@@ -38,11 +37,28 @@ export const useProfile = (ssrUser: User, currentUser: User) => {
       router.replace(router.asPath);
     },
   });
+
   // follow a user
   const [followUser] = useMutation(FOLLOW_USER, {
     onCompleted: () => {
       setIsAFollower(true);
+
+      router.replace(router.asPath);
     },
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
+  //unfollow a user
+
+  const [removeFollower] = useMutation(REMOVE_FOLLOWER, {
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
+  const [removeFollowing] = useMutation(REMOVE_FOLLOWING, {
     onError: (e) => {
       console.log(e);
     },
@@ -93,6 +109,24 @@ export const useProfile = (ssrUser: User, currentUser: User) => {
     });
   };
 
+  const handleUnFollowUser = () => {
+    Promise.all([
+      removeFollowing({
+        variables: { id: currentUser.id },
+      }),
+
+      removeFollower({
+        variables: { id: currentUser.id },
+      }),
+    ])
+      .then(() => {
+        setIsAFollower(false);
+        router.replace(router.asPath);
+      })
+      .catch((e) => console.log(e));
+  };
+
+  //side effects
   useEffect(() => {
     setUsername(ssrUser.username);
     setName(ssrUser.profile.name);
@@ -109,8 +143,6 @@ export const useProfile = (ssrUser: User, currentUser: User) => {
   }, []);
 
   useEffect(() => {
-    console.log('rand');
-
     isAFollowerHandler();
   }, [ssrUser]);
 
@@ -131,6 +163,7 @@ export const useProfile = (ssrUser: User, currentUser: User) => {
       handleProfilePictureUpload: on.handleUploadInputChange,
       handleUpdateProfile,
       handleFollowUser,
+      handleUnFollowUser,
     },
   };
 };

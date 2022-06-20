@@ -27,9 +27,10 @@ import { GET_CURRENT_USER } from 'gql/query/getCurrentUser';
 const Profile: FC<Type.ProfilePageProps> = ({ user, currentUser }) => {
   const { query } = useRouter();
 
-  const { get, set, on } = Hook.useProfile(user, currentUser);
+  console.log(user, 'user');
+  console.log(currentUser, 'currentUser');
 
-  console.log(user);
+  const { get, set, on } = Hook.useProfile(user, currentUser);
 
   return (
     <>
@@ -205,7 +206,11 @@ const Profile: FC<Type.ProfilePageProps> = ({ user, currentUser }) => {
                         fontWeight: 600,
                         position: 'unset',
                       }}
-                      onClick={on.handleFollowUser}
+                      onClick={
+                        get.isAFollower
+                          ? on.handleUnFollowUser
+                          : on.handleFollowUser
+                      }
                     >
                       {get.isAFollower ? 'Unfollow' : 'Follow'}
                     </Button>
