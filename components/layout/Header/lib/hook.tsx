@@ -131,7 +131,7 @@ export const useUpload = (closeModalSetState: Dispatch<boolean>) => {
 
   const [createStory] = useMutation(CREATE_STORY, {
     variables: {
-      stories: imageName,
+      story: imageName,
       userId: user.id,
     },
     onCompleted: (data) => {

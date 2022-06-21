@@ -1,4 +1,6 @@
+import { Story } from 'types/global';
+
 export interface StoriesProps {
-  ownerStories: string[];
+  ownerStories: Story[];
   profile_pic: string;
 }

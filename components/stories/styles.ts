@@ -68,3 +68,16 @@ export const Wrapper = styled.div`
     }
   }
 `;
+
+export const StoryViewerWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #1a1a1a;
+  display: flex;
+  flex: 1;
+  z-index: 100;
+`;

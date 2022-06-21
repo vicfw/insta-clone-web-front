@@ -8,7 +8,8 @@ export type Icon =
   | 'heart'
   | 'media'
   | 'back-arrow'
-  | 'profile';
+  | 'profile'
+  | 'close';
 
 export interface IconProps {
   name: Icon;

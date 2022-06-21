@@ -9,6 +9,7 @@ import CreateClient from 'utils/use-apollo';
 import * as Type from '../types/home';
 import { UserContext } from 'context/UserContext';
 import { useContext, useEffect } from 'react';
+import { StoryViewer } from 'components/stories/components';
 
 const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser }) => {
   const { dispatch } = useContext(UserContext);
@@ -28,9 +29,9 @@ const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser }) => {
         <Style.Wrapper>
           <Grid container>
             <Grid item md={7}>
-              {currentUser?.story && (
+              {currentUser?.stories.length && (
                 <Stories
-                  ownerStories={currentUser?.story?.stories}
+                  ownerStories={currentUser?.stories}
                   profile_pic={currentUser?.profile?.profile_pic}
                 />
               )}

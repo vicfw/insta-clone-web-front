@@ -12,8 +12,8 @@ export const GET_CURRENT_USER = gql`
         profile_pic
         name
       }
-      story {
-        stories
+      stories {
+        story
       }
 
       following {

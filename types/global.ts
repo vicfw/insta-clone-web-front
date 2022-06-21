@@ -21,11 +21,14 @@ export interface User {
   };
   description: string;
 
-  story: {
-    id: number;
-    stories: string[];
-  };
+  stories: Story[];
 
   following: Following[];
   follower: Followers[];
+}
+
+export interface Story {
+  id?: number;
+  story?: string;
+  userId?: number;
 }
