@@ -20,9 +20,7 @@ export interface User {
     name: string;
   };
   description: string;
-
   stories: Story[];
-
   following: Following[];
   follower: Followers[];
 }

@@ -80,4 +80,22 @@ export const StoryViewerWrapper = styled.div`
   display: flex;
   flex: 1;
   z-index: 100;
+
+  .inner-container {
+    position: relative;
+    display: flex;
+    flex: 1;
+
+    .logo {
+      position: absolute;
+      left: 5px;
+      top: 5px;
+    }
+
+    .close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+  }
 `;

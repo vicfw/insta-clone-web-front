@@ -6,8 +6,11 @@ import { Carousel } from '@trendyol-js/react-carousel';
 import * as Types from './types';
 import imageAddress from 'utils/imageAddress';
 import * as Component from './components';
+import * as Hook from './hooks';
 
 const Stories: FC<Types.StoriesProps> = ({ ownerStories, profile_pic }) => {
+  const { get, on } = Hook.useStories();
+
   return (
     <>
       <Style.Wrapper>
@@ -27,7 +30,7 @@ const Stories: FC<Types.StoriesProps> = ({ ownerStories, profile_pic }) => {
           infinite={false}
         >
           {ownerStories?.length ? (
-            <div className="user-story">
+            <div className="user-story" onClick={on.handleShowStories}>
               <img src={imageAddress(profile_pic)} alt={profile_pic} />
             </div>
           ) : (
@@ -36,7 +39,9 @@ const Stories: FC<Types.StoriesProps> = ({ ownerStories, profile_pic }) => {
           <div></div>
         </Carousel>
       </Style.Wrapper>
-      <Component.StoryViewer />
+      {get.showStories && (
+        <Component.StoryViewer handleShowStories={on.handleShowStories} />
+      )}
     </>
   );
 };

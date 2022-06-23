@@ -133,6 +133,7 @@ export const useUpload = (closeModalSetState: Dispatch<boolean>) => {
     variables: {
       story: imageName,
       userId: user.id,
+      profileId: user.profile.id,
     },
     onCompleted: (data) => {
       closeModalSetState(false);

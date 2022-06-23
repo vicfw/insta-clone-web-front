@@ -10,8 +10,13 @@ import * as Type from '../types/home';
 import { UserContext } from 'context/UserContext';
 import { useContext, useEffect } from 'react';
 import { StoryViewer } from 'components/stories/components';
+import { GET_STORIES } from 'gql/query/getStories';
+import { Following } from 'types/global';
 
-const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser }) => {
+const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser, stories }) => {
+  console.log(stories);
+  console.log(currentUser, 'currentUSer');
+
   const { dispatch } = useContext(UserContext);
   useEffect(() => {
     dispatch({ type: 'SET_USER', payload: currentUser });
@@ -51,8 +56,18 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
       query: GET_CURRENT_USER,
     });
 
+    const followingIds: number[] = data.getCurrentUser.following.map(
+      (flw: Following) => flw.followedUserId
+    );
+    console.log(followingIds, 'followingIds');
+
+    const { data: stories } = await apollo.query({
+      query: GET_STORIES,
+      variables: { id: followingIds },
+    });
+
     return {
-      props: { currentUser: data.getCurrentUser },
+      props: { currentUser: data.getCurrentUser, stories },
     };
   } catch (e) {
     console.log(e);
