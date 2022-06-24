@@ -5,6 +5,13 @@ export const GET_STORIES = gql`
     userStories(id: $id) {
       story
       userId
+      user {
+        username
+      }
+      profile {
+        profile_pic
+        name
+      }
     }
   }
 `;

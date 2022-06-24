@@ -10,6 +10,13 @@ export interface Followers {
   userId: number;
 }
 
+export interface Profile {
+  id: number;
+  profile_pic: string;
+  name: string;
+  stories: Story[];
+}
+
 export interface User {
   id: number;
   email: string;
@@ -29,4 +36,6 @@ export interface Story {
   id?: number;
   story?: string;
   userId?: number;
+  user?: User;
+  profile?: Profile;
 }

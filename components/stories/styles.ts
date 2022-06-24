@@ -63,6 +63,7 @@ export const Wrapper = styled.div`
 
     img {
       width: 100%;
+      height: 100%;
       border: 2px solid #fff;
       border-radius: 50%;
     }

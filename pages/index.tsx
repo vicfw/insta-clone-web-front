@@ -15,7 +15,6 @@ import { Following } from 'types/global';
 
 const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser, stories }) => {
   console.log(stories);
-  console.log(currentUser, 'currentUSer');
 
   const { dispatch } = useContext(UserContext);
   useEffect(() => {
@@ -38,6 +37,7 @@ const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser, stories }) => {
                 <Stories
                   ownerStories={currentUser?.stories}
                   profile_pic={currentUser?.profile?.profile_pic}
+                  followingStories={stories}
                 />
               )}
             </Grid>
@@ -66,8 +66,10 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
       variables: { id: followingIds },
     });
 
+    console.log(stories, 'stories');
+
     return {
-      props: { currentUser: data.getCurrentUser, stories },
+      props: { currentUser: data.getCurrentUser, stories: stories.userStories },
     };
   } catch (e) {
     console.log(e);

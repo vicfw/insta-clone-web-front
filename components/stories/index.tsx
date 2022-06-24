@@ -8,8 +8,14 @@ import imageAddress from 'utils/imageAddress';
 import * as Component from './components';
 import * as Hook from './hooks';
 
-const Stories: FC<Types.StoriesProps> = ({ ownerStories, profile_pic }) => {
+const Stories: FC<Types.StoriesProps> = ({
+  ownerStories,
+  profile_pic,
+  followingStories,
+}) => {
   const { get, on } = Hook.useStories();
+
+  console.log(followingStories, 'followingStories');
 
   return (
     <>
@@ -29,13 +35,28 @@ const Stories: FC<Types.StoriesProps> = ({ ownerStories, profile_pic }) => {
           }
           infinite={false}
         >
-          {ownerStories?.length ? (
-            <div className="user-story" onClick={on.handleShowStories}>
-              <img src={imageAddress(profile_pic)} alt={profile_pic} />
-            </div>
-          ) : (
-            <></>
-          )}
+          <div>
+            {ownerStories?.length && (
+              <div className="user-story" onClick={on.handleShowStories}>
+                <img src={imageAddress(profile_pic)} alt={profile_pic} />
+              </div>
+            )}
+          </div>
+          <div>
+            {followingStories.length
+              ? followingStories?.map((story) => {
+                  return (
+                    <div className="user-story" onClick={on.handleShowStories}>
+                      <img
+                        src={imageAddress(story?.profile?.profile_pic!)}
+                        alt={story?.profile?.profile_pic!}
+                      />
+                    </div>
+                  );
+                })
+              : null}
+          </div>
+
           <div></div>
         </Carousel>
       </Style.Wrapper>
