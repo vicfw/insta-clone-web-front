@@ -33,13 +33,13 @@ const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser, stories }) => {
         <Style.Wrapper>
           <Grid container>
             <Grid item md={7}>
-              {currentUser?.stories.length && (
+              {currentUser?.stories.length ? (
                 <Stories
                   ownerStories={currentUser?.stories}
                   profile_pic={currentUser?.profile?.profile_pic}
                   followingStories={stories}
                 />
-              )}
+              ):null}
             </Grid>
           </Grid>
         </Style.Wrapper>

@@ -13,9 +13,9 @@ const Stories: FC<Types.StoriesProps> = ({
   profile_pic,
   followingStories,
 }) => {
-  const { get, on } = Hook.useStories();
+  const { get, on } = Hook.useStories(ownerStories,followingStories);
 
-  console.log(followingStories, 'followingStories');
+  console.log(ownerStories, 'ownerStories');
 
   return (
     <>
@@ -36,11 +36,11 @@ const Stories: FC<Types.StoriesProps> = ({
           infinite={false}
         >
           <div>
-            {ownerStories?.length && (
+            {ownerStories?.length ? (
               <div className="user-story" onClick={on.handleShowStories}>
                 <img src={imageAddress(profile_pic)} alt={profile_pic} />
               </div>
-            )}
+            ):null}
           </div>
           <div>
             {followingStories.length
