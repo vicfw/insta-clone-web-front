@@ -8,4 +8,11 @@ export interface StoriesProps {
 
 export interface StoryViewerProps {
   handleShowStories: () => void;
+  allUsersStories: AllUsersStories[] | undefined;
+}
+
+export interface AllUsersStories {
+  id: number | undefined;
+  story: string | undefined;
+  ownerId: number | undefined;
 }

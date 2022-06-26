@@ -15,6 +15,7 @@ export const GET_CURRENT_USER = gql`
       stories {
         id
         story
+        userId
       }
 
       following {
