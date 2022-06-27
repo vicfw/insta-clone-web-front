@@ -15,4 +15,5 @@ export interface AllUsersStories {
   id: number | undefined;
   story: string | undefined;
   ownerId: number | undefined;
+  isSelected: boolean;
 }
