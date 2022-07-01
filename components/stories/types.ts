@@ -1,4 +1,4 @@
-import { Story } from 'types/global';
+import { Profile, Story } from 'types/global';
 
 export interface StoriesProps {
   ownerStories: Story[];
@@ -8,7 +8,7 @@ export interface StoriesProps {
 
 export interface StoryViewerProps {
   handleShowStories: () => void;
-  allUsersStories: AllUsersStories[] | undefined;
+  allUsersStories: AllUsersStories[][] | undefined;
 }
 
 export interface AllUsersStories {
@@ -16,4 +16,5 @@ export interface AllUsersStories {
   story: string | undefined;
   ownerId: number | undefined;
   isSelected: boolean;
+  profile: Profile;
 }

@@ -16,26 +16,22 @@ export const useStories = (
   };
 
   useEffect(() => {
-    const userStories: Types.AllUsersStories[] | undefined = ownerStories?.map(
-      (story) => ({
-        id: story.id,
-        story: story.story,
-        ownerId: story.userId,
-        isSelected: false,
-      })
-    );
-    const flwingStories: Types.AllUsersStories[] | undefined =
-      followingStories?.map((story) => ({
-        id: story.id,
-        story: story.story,
-        ownerId: story.userId,
-        isSelected: false,
-      }));
-    if (userStories || flwingStories) {
-      const data = [...userStories, ...flwingStories];
+    const combineStories = [...ownerStories, ...followingStories];
+    console.log(combineStories, 'combineStories');
 
-      const finalData = [...new Set(data!.map((d) => d.ownerId))].map((label) =>
-        data!.filter((d) => d.ownerId === label).map((d) => d)
+    const stories = combineStories.map((story) => {
+      return {
+        id: story.id,
+        story: story.story,
+        ownerId: story.userId,
+        isSelected: false,
+        profile: story.profile,
+      };
+    });
+
+    if (stories.length) {
+      const finalData = [...new Set(stories!.map((d) => d.ownerId))].map(
+        (label) => stories!.filter((d) => d.ownerId === label).map((d) => d)
       );
 
       setAllUserStories(finalData);

@@ -14,12 +14,14 @@ import { GET_STORIES } from 'gql/query/getStories';
 import { Following } from 'types/global';
 
 const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser, stories }) => {
-  console.log(stories);
+  console.log(currentUser, 'currentUser');
 
   const { dispatch } = useContext(UserContext);
+
   useEffect(() => {
     dispatch({ type: 'SET_USER', payload: currentUser });
   }, []);
+
   return (
     <>
       <Head>
@@ -39,7 +41,7 @@ const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser, stories }) => {
                   profile_pic={currentUser?.profile?.profile_pic}
                   followingStories={stories}
                 />
-              ):null}
+              ) : null}
             </Grid>
           </Grid>
         </Style.Wrapper>
@@ -56,17 +58,16 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
       query: GET_CURRENT_USER,
     });
 
+    console.log(data.getCurrentUser, 'data');
+
     const followingIds: number[] = data.getCurrentUser.following.map(
       (flw: Following) => flw.followedUserId
     );
-    console.log(followingIds, 'followingIds');
 
     const { data: stories } = await apollo.query({
       query: GET_STORIES,
       variables: { id: followingIds },
     });
-
-    console.log(stories, 'stories');
 
     return {
       props: { currentUser: data.getCurrentUser, stories: stories.userStories },

@@ -16,6 +16,11 @@ export const GET_CURRENT_USER = gql`
         id
         story
         userId
+        profile {
+          id
+          profile_pic
+          name
+        }
       }
 
       following {

@@ -122,19 +122,24 @@ export const StoryViewerWrapper = styled.div`
         display: flex;
         gap: 20px;
 
-        max-width: 840px;
+        max-width: 1140px;
+        height: 100%;
+
         align-self: center;
         overflow: hidden;
         position: relative;
         .story {
           margin-top: 50px;
-
-          height: 457.92px;
-          width: 257.58px;
+          width: 380px;
+          width: 800px;
+          border-left: 46px solid transparent;
+          border-right: 46px solid transparent;
+          height: 100%;
 
           img {
             width: 100%;
             height: 100%;
+            display: block;
           }
         }
       }
