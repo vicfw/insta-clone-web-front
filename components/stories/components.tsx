@@ -38,7 +38,7 @@ export const StoryViewer: FC<Types.StoryViewerProps> = ({
                         </div>
                         <div className="profile">
                           <img
-                            src={imageAddress(st.profile.profile_pic)}
+                            src={imageAddress(st.profile?.profile_pic!)}
                             alt=""
                           />
                         </div>

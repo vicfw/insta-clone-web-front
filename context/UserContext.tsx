@@ -15,16 +15,18 @@ const initialState = {
   description: '',
   following: [{ id: 0, userId: 0, followedUserId: 0 }],
   follower: [{ id: 0, userId: 0, followerUserId: 0 }],
-  stories: {
-    id: 0,
-    story: '',
-    userId: 0,
-    profile: {
+  stories: [
+    {
       id: 0,
-      profile_pic: '',
-      name: '',
+      story: '',
+      userId: 0,
+      profile: {
+        id: 0,
+        profile_pic: '',
+        name: '',
+      },
     },
-  },
+  ],
 
   loading: false,
 };

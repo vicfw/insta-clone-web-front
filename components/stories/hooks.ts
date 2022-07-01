@@ -17,7 +17,7 @@ export const useStories = (
 
   useEffect(() => {
     const combineStories = [...ownerStories, ...followingStories];
-    console.log(combineStories, 'combineStories');
+    console.log(combineStories, '');
 
     const stories = combineStories.map((story) => {
       return {

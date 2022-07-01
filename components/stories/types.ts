@@ -16,5 +16,5 @@ export interface AllUsersStories {
   story: string | undefined;
   ownerId: number | undefined;
   isSelected: boolean;
-  profile: Profile;
+  profile: Profile | undefined;
 }
