@@ -128,18 +128,55 @@ export const StoryViewerWrapper = styled.div`
         align-self: center;
         overflow: hidden;
         position: relative;
-        .story {
+        .story-wrapper {
           margin-top: 50px;
           width: 380px;
           width: 800px;
           border-left: 46px solid transparent;
           border-right: 46px solid transparent;
           height: 100%;
+          position: relative;
+          border-radius: 10px;
 
           img {
             width: 100%;
             height: 100%;
             display: block;
+          }
+
+          .story {
+            position: relative;
+            .main-image {
+              border-radius: 10px;
+            }
+            .profile-wrapper {
+              display: flex;
+              position: absolute;
+              width: 100%;
+              height: 25%;
+              vertical-align: baseline;
+              align-items: center;
+
+              background: linear-gradient(
+                180deg,
+                rgba(20, 20, 20, 0.8) 0%,
+                rgba(38, 38, 38, 0) 100%
+              );
+              .profile {
+                padding: 10px;
+              }
+
+              .profile-name {
+                span:first-child {
+                  color: #fff;
+                }
+                span:last-child {
+                  color: #fff;
+                  font-size: 13px;
+                  margin: 5px;
+                }
+              }
+            }
           }
         }
       }

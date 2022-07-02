@@ -73,7 +73,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
       props: { currentUser: data.getCurrentUser, stories: stories.userStories },
     };
   } catch (e) {
-    console.log(e);
+    console.log(JSON.stringify(e), 'edlar');
     return {
       props: {},
       redirect: {

@@ -6,6 +6,8 @@ export const GET_STORIES = gql`
       id
       story
       userId
+      created_at
+      updated_at
       user {
         username
       }

@@ -30,6 +30,10 @@ export const useSlider = () => {
 
   useEffect(() => {
     imageSlider();
+
+    return () => {
+      clearTimeout();
+    };
   }, []);
 
   return {};

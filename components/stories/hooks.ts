@@ -17,8 +17,6 @@ export const useStories = (
 
   useEffect(() => {
     const combineStories = [...ownerStories, ...followingStories];
-    console.log(combineStories, '');
-
     const stories = combineStories.map((story) => {
       return {
         id: story.id,
@@ -26,6 +24,8 @@ export const useStories = (
         ownerId: story.userId,
         isSelected: false,
         profile: story.profile,
+        created_at: story.created_at,
+        updated_at: story.updated_at,
       };
     });
 

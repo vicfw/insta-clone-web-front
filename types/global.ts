@@ -36,6 +36,8 @@ export interface Story {
   id?: number;
   story?: string;
   userId?: number;
+  created_at: Date;
+  updated_at: Date;
   user?: User;
   profile?: Profile;
 }

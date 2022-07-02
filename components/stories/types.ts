@@ -17,4 +17,6 @@ export interface AllUsersStories {
   ownerId: number | undefined;
   isSelected: boolean;
   profile: Profile | undefined;
+  created_at: Date;
+  updated_at: Date;
 }
