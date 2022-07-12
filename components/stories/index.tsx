@@ -13,7 +13,7 @@ const Stories: FC<Types.StoriesProps> = ({
   profile_pic,
   followingStories,
 }) => {
-  const { get, on } = Hook.useStories(ownerStories,followingStories);
+  const { get, on } = Hook.useStories(ownerStories, followingStories);
 
   console.log(ownerStories, 'ownerStories');
 
@@ -23,6 +23,7 @@ const Stories: FC<Types.StoriesProps> = ({
         <Carousel
           show={7.5}
           slide={4}
+          className="carousel"
           rightArrow={
             <div className="arrow-right">
               <ArrowForwardIosIcon />
@@ -35,14 +36,14 @@ const Stories: FC<Types.StoriesProps> = ({
           }
           infinite={false}
         >
-          <div>
+          <div className="story-container">
             {ownerStories?.length ? (
               <div className="user-story" onClick={on.handleShowStories}>
                 <img src={imageAddress(profile_pic)} alt={profile_pic} />
               </div>
-            ):null}
+            ) : null}
           </div>
-          <div>
+          <div className="story-container">
             {followingStories.length
               ? followingStories?.map((story) => {
                   return (
@@ -61,7 +62,10 @@ const Stories: FC<Types.StoriesProps> = ({
         </Carousel>
       </Style.Wrapper>
       {get.showStories && (
-        <Component.StoryViewer handleShowStories={on.handleShowStories} />
+        <Component.StoryViewer
+          handleShowStories={on.handleShowStories}
+          allUsersStories={get.allUserStories}
+        />
       )}
     </>
   );

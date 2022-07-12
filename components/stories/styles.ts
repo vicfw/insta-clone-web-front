@@ -11,6 +11,36 @@ export const Wrapper = styled.div`
   position: relative;
   z-index: 2;
 
+  .carousel {
+    > div > div > div {
+      width: auto !important;
+    }
+  }
+
+  .story-container {
+    width: 70px;
+    height: 70px;
+    min-width: 70px;
+    min-height: 70px;
+
+    .user-story {
+      width: 70px;
+      height: 70px;
+      min-width: 70px;
+      min-height: 70px;
+      border-radius: 50%;
+      padding: 2px;
+      background: linear-gradient(to right, red, purple);
+
+      img {
+        width: 100%;
+        height: 100%;
+        border: 2px solid #fff;
+        border-radius: 50%;
+      }
+    }
+  }
+
   .arrow-right {
     background-color: #fff;
     height: 25px;
@@ -51,23 +81,6 @@ export const Wrapper = styled.div`
       margin-left: 5px;
     }
   }
-
-  .user-story {
-    width: 66px;
-    height: 66px;
-    min-width: 66px;
-    min-height: 66px;
-    border-radius: 50%;
-    padding: 2px;
-    background: linear-gradient(to right, red, purple);
-
-    img {
-      width: 100%;
-      height: 100%;
-      border: 2px solid #fff;
-      border-radius: 50%;
-    }
-  }
 `;
 
 export const StoryViewerWrapper = styled.div`
@@ -97,6 +110,76 @@ export const StoryViewerWrapper = styled.div`
       position: absolute;
       right: 10px;
       top: 10px;
+    }
+
+    .story-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      flex: 1;
+
+      .container {
+        display: flex;
+        gap: 20px;
+
+        max-width: 1140px;
+        height: 100%;
+
+        align-self: center;
+        overflow: hidden;
+        position: relative;
+        .story-wrapper {
+          margin-top: 50px;
+          width: 380px;
+          width: 800px;
+          border-left: 46px solid transparent;
+          border-right: 46px solid transparent;
+          height: 100%;
+          position: relative;
+          border-radius: 10px;
+
+          img {
+            width: 100%;
+            height: 100%;
+            display: block;
+          }
+
+          .story {
+            position: relative;
+            .main-image {
+              border-radius: 10px;
+            }
+            .profile-wrapper {
+              display: flex;
+              position: absolute;
+              width: 100%;
+              height: 25%;
+              vertical-align: baseline;
+              align-items: center;
+
+              background: linear-gradient(
+                180deg,
+                rgba(20, 20, 20, 0.8) 0%,
+                rgba(38, 38, 38, 0) 100%
+              );
+              .profile {
+                padding: 10px;
+              }
+
+              .profile-name {
+                span:first-child {
+                  color: #fff;
+                }
+                span:last-child {
+                  color: #fff;
+                  font-size: 13px;
+                  margin: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;

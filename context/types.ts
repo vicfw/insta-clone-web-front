@@ -1,6 +1,8 @@
 import { User } from 'types/global';
 
-export interface UserType extends User {}
+export interface UserType extends User {
+  loading: boolean;
+}
 
 export interface Action {
   type: string;

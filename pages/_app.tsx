@@ -4,7 +4,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import { ApolloProvider } from '@apollo/client';
 import CreateClient, { GlobalLoadingIndicator } from 'utils/use-apollo';
 import { theme } from 'utils/theme';
-import { useRouter } from 'next/router';
 import { ContextProvider } from 'context/UserContext';
 
 function MyApp({ Component, pageProps }: AppProps) {

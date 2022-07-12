@@ -14,7 +14,7 @@ export interface Profile {
   id: number;
   profile_pic: string;
   name: string;
-  stories: Story[];
+  stories?: Story[];
 }
 
 export interface User {
@@ -36,6 +36,8 @@ export interface Story {
   id?: number;
   story?: string;
   userId?: number;
+  created_at: Date;
+  updated_at: Date;
   user?: User;
   profile?: Profile;
 }

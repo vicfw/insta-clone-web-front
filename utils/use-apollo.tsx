@@ -13,6 +13,8 @@ export function GlobalLoadingIndicator() {
   const status = useApolloNetworkStatus();
   const [showSnack, setShowSnack] = useState(false);
 
+  console.log(status, 'status');
+
   useEffect(() => {
     if (status.queryError?.networkError) {
       setShowSnack(true);
