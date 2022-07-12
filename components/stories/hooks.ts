@@ -9,7 +9,7 @@ export const useStories = (ownerStories:Story[],followingStories:Story[]) => {
     setShowStories((perval) => !perval);
   };
 
-  useEffect(()=>{
+  useEffect(()=>{ 
       const userStories = ownerStories?.map(story=>({id:story.id,story:story.story}))
       const flwingStories = followingStories?.map(story=>({id:story.id,story:story.story}))
       if(userStories || flwingStories) setAllUserStories([...userStories,...flwingStories])
