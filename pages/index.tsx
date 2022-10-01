@@ -14,8 +14,6 @@ import { GET_STORIES } from 'gql/query/getStories';
 import { Following } from 'types/global';
 
 const Home: NextPage<Type.MainPagePropTypes> = ({ currentUser, stories }) => {
-  console.log(currentUser, 'currentUser');
-
   const { dispatch } = useContext(UserContext);
 
   useEffect(() => {
@@ -58,8 +56,6 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
       query: GET_CURRENT_USER,
     });
 
-    console.log(data.getCurrentUser, 'data');
-
     const followingIds: number[] = data.getCurrentUser.following.map(
       (flw: Following) => flw.followedUserId
     );
@@ -73,7 +69,6 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
       props: { currentUser: data.getCurrentUser, stories: stories.userStories },
     };
   } catch (e) {
-    console.log(JSON.stringify(e), 'edlar');
     return {
       props: {},
       redirect: {

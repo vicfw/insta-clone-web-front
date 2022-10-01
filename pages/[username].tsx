@@ -27,9 +27,6 @@ import { GET_CURRENT_USER } from 'gql/query/getCurrentUser';
 const Profile: FC<Type.ProfilePageProps> = ({ user, currentUser }) => {
   const { query } = useRouter();
 
-  console.log(user, 'user');
-  console.log(currentUser, 'currentUser');
-
   const { get, set, on } = Hook.useProfile(user, currentUser);
 
   return (

@@ -10,18 +10,68 @@ import * as Type from './types';
 export const StoryUploadStepOne: FC<Type.ModalProps> = ({
   closeModalSetState,
 }) => {
-  const { on, val } = UseHook.useUpload(closeModalSetState);
+  const { on, val, set } = UseHook.useUpload(closeModalSetState);
+
+  const renderSteps = () => {
+    if (val.isStepOne) {
+      return (
+        <div className="content">
+          <Icon name="media" size={100} />
+          <div className="inputs">
+            <Button
+              variant="contained"
+              component="label"
+              sx={{ fontWeight: 'bold', textTransform: 'initial' }}
+              onClick={() => set.setStoryOrPost('story')}
+            >
+              Create a story
+              <input
+                type="file"
+                hidden
+                onChange={(e) => {
+                  on.handleUploadInputChange(e);
+                }}
+              />
+            </Button>
+            <Button
+              variant="contained"
+              component="label"
+              sx={{ fontWeight: 'bold', textTransform: 'initial' }}
+              onClick={() => set.setStoryOrPost('post')}
+            >
+              Create a post
+              <input
+                type="file"
+                hidden
+                onChange={(e) => {
+                  on.handleUploadInputChange(e);
+                }}
+              />
+            </Button>
+          </div>
+        </div>
+      );
+    } else if (val.isCreateStoryStepTwo) {
+      return (
+        <div className="preview">
+          <img src={imageAddress(val.imageName)} alt="" />
+        </div>
+      );
+    } else if (val.isCreatePostStepTwo) {
+      return <div>asdasdasdasd</div>;
+    }
+  };
 
   return (
     <Style.InputsWrapper>
       <div className="header">
-        {val.isStepTwo ? (
+        {val.isCreateStoryStepTwo || val.isCreatePostStepTwo ? (
           <Icon name="back-arrow" size={24} onClick={on.handleBackToStepOne} />
         ) : (
           <div></div>
         )}
         <p>Create New Story Or Post</p>
-        {val.isStepTwo ? (
+        {val.isCreateStoryStepTwo || val.isCreatePostStepTwo ? (
           <Button
             variant="text"
             color="primary"
@@ -43,39 +93,7 @@ export const StoryUploadStepOne: FC<Type.ModalProps> = ({
         vertical="bottom"
         horizontal="center"
       />
-      {val.isStepOne ? (
-        <div className="content">
-          <Icon name="media" size={100} />
-          <div className="inputs">
-            <Button
-              variant="contained"
-              component="label"
-              sx={{ fontWeight: 'bold', textTransform: 'initial' }}
-            >
-              Create a story
-              <input
-                type="file"
-                hidden
-                onChange={(e) => {
-                  on.handleUploadInputChange(e);
-                }}
-              />
-            </Button>
-            <Button
-              variant="contained"
-              component="label"
-              sx={{ fontWeight: 'bold', textTransform: 'initial' }}
-            >
-              Create a post
-              <input type="file" hidden />
-            </Button>
-          </div>
-        </div>
-      ) : (
-        <div className="preview">
-          <img src={imageAddress(val.imageName)} alt="" />
-        </div>
-      )}
+      {renderSteps()}
     </Style.InputsWrapper>
   );
 };

@@ -20,6 +20,7 @@ import { useRouter, withRouter } from 'next/router';
 import Head from 'next/head';
 import * as Types from '../../types/login';
 import nookies from 'nookies';
+import Link from 'next/link';
 
 const Login: FC<Types.LoginProps> = ({ router: routerProp }) => {
   const {} = useSlider();
@@ -125,7 +126,9 @@ const Login: FC<Types.LoginProps> = ({ router: routerProp }) => {
             >
               <h4>
                 Don't have an account?{' '}
-                <span onClick={() => router.push('/signup')}>Sign up</span>
+                <Link href="/signup" prefetch={false}>
+                  <span>Sign up</span>
+                </Link>
               </h4>
             </Grid>
           </Grid>

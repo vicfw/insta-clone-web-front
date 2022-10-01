@@ -1,12 +1,12 @@
-import React, { FC, useEffect } from 'react';
-import * as Style from './styles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Carousel } from '@trendyol-js/react-carousel';
-import * as Types from './types';
+import { FC } from 'react';
 import imageAddress from 'utils/imageAddress';
 import * as Component from './components';
 import * as Hook from './hooks';
+import * as Style from './styles';
+import * as Types from './types';
 
 const Stories: FC<Types.StoriesProps> = ({
   ownerStories,
@@ -14,8 +14,6 @@ const Stories: FC<Types.StoriesProps> = ({
   followingStories,
 }) => {
   const { get, on } = Hook.useStories(ownerStories, followingStories);
-
-  console.log(ownerStories, 'ownerStories');
 
   return (
     <>

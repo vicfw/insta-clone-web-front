@@ -13,7 +13,7 @@ export interface StoryViewerProps {
 
 export interface AllUsersStories {
   id: number | undefined;
-  story: string | undefined;
+  url: string | undefined;
   ownerId: number | undefined;
   isSelected: boolean;
   profile: Profile | undefined;

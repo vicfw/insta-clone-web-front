@@ -1,11 +1,13 @@
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Carousel } from '@trendyol-js/react-carousel';
 import { Icon } from 'components/icon';
-import ProfilePicture from 'components/ProfilePicture';
+import useDateOption from 'hooks/customHooks/useDateOption';
 import { FC } from 'react';
-import imageAddress from 'utils/imageAddress';
+import Stories from 'react-insta-stories';
+import { Story } from 'react-insta-stories/dist/interfaces';
 import * as Style from './styles';
 import * as Types from './types';
-import dayjs from 'dayjs';
-import useDateOption from 'hooks/customHooks/useDateOption';
 
 export const StoryViewer: FC<Types.StoryViewerProps> = ({
   handleShowStories,
@@ -32,35 +34,12 @@ export const StoryViewer: FC<Types.StoryViewerProps> = ({
             {allUsersStories?.map((story, index) => {
               return (
                 <div className="story-wrapper" key={index}>
-                  {story.map((st) => {
-                    return (
-                      <div className="story" key={st.id}>
-                        <div className="loaders">
-                          <div className="line"></div>
-                          <div className="fill-line"></div>
-                        </div>
-                        <header className="profile-wrapper">
-                          <div className="profile">
-                            <ProfilePicture
-                              width={50}
-                              height={50}
-                              imagePath={st.profile?.profile_pic!}
-                            />
-                          </div>
-                          <div className="profile-name">
-                            <span>{st.profile?.name}</span>
-                            <span> {dayjs(st.created_at).fromNow(true)}</span>
-                          </div>
-                        </header>
-
-                        <img
-                          className="main-image"
-                          src={imageAddress(st?.story!)}
-                          alt=""
-                        />
-                      </div>
-                    );
-                  })}
+                  <Stories
+                    defaultInterval={6000}
+                    loop={true}
+                    width="100%"
+                    stories={story as Story[]}
+                  />
                 </div>
               );
             })}

@@ -10,3 +10,5 @@ export interface SearchResultType {
   username: string;
   name: string;
 }
+
+export type StoryOrPost = 'story' | 'post' | '';

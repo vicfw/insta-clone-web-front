@@ -1,5 +1,7 @@
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { Story } from 'types/global';
+import imageAddress from 'utils/imageAddress';
 import * as Types from './types';
 
 export const useStories = (
@@ -20,12 +22,16 @@ export const useStories = (
     const stories = combineStories.map((story) => {
       return {
         id: story.id,
-        story: story.story,
+        url: imageAddress(story.story as string),
         ownerId: story.userId,
         isSelected: false,
         profile: story.profile,
         created_at: story.created_at,
         updated_at: story.updated_at,
+        header: {
+          heading: story.profile?.name,
+          profileImage: imageAddress(story.profile?.profile_pic as string),
+        },
       };
     });
 
@@ -37,8 +43,6 @@ export const useStories = (
       setAllUserStories(finalData);
     }
   }, []);
-
-  console.log(allUserStories, 'allUserStories ');
 
   return {
     get: {

@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
-    "build": "next build",
-    "start": "next start -p 3001",
+    "build": "next build -p 3001",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -25,6 +25,7 @@
     "react": "18.0.0",
     "react-apollo-network-status": "^5.1.0",
     "react-dom": "18.0.0",
+    "react-insta-stories": "^2.4.2",
     "sharp": "^0.30.5",
     "styled-components": "^5.3.5"
   },

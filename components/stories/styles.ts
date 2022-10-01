@@ -12,6 +12,10 @@ export const Wrapper = styled.div`
   z-index: 2;
 
   .carousel {
+    > div > div {
+      gap: 10px;
+    }
+
     > div > div > div {
       width: auto !important;
     }
@@ -131,7 +135,6 @@ export const StoryViewerWrapper = styled.div`
         .story-wrapper {
           margin-top: 50px;
           width: 380px;
-          width: 800px;
           border-left: 46px solid transparent;
           border-right: 46px solid transparent;
           height: 100%;

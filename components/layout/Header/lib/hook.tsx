@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { UserContext } from 'context/UserContext';
+import { CREATE_POST } from 'gql/mutations/post';
 import { CREATE_STORY } from 'gql/mutations/story';
 import { UPLOAD_FILE } from 'gql/mutations/upload';
 import { SEARCH_USER } from 'gql/query/searchUser';
@@ -101,9 +102,11 @@ export const useHeader = () => {
 };
 
 export const useUpload = (closeModalSetState: Dispatch<boolean>) => {
+  const [storyOrPost, setStoryOrPost] = useState<Type.StoryOrPost>('');
   const [imageName, setImageName] = useState('');
   const [isStepOne, setIsStepOne] = useState(true);
-  const [isStepTwo, setIsStepTwo] = useState(false);
+  const [isCreateStoryStepTwo, setIsCreateStoryStepTwo] = useState(false);
+  const [isCreatePostStepTwo, setIsCreatePostStepTwo] = useState(false);
   const [showSnack, setShowSnack] = useState({ message: '', show: false });
   const router = useRouter();
 
@@ -113,7 +116,13 @@ export const useUpload = (closeModalSetState: Dispatch<boolean>) => {
     onCompleted: (data) => {
       setImageName(data.uploadFile);
       setIsStepOne(false);
-      setIsStepTwo(true);
+      console.log(storyOrPost, 'storyOrPost');
+
+      if (storyOrPost.includes('story')) {
+        setIsCreateStoryStepTwo(true);
+      } else {
+        setIsCreatePostStepTwo(true);
+      }
     },
     onError: (e) => {
       let msg: string = '';
@@ -140,9 +149,20 @@ export const useUpload = (closeModalSetState: Dispatch<boolean>) => {
       setImageName('');
       router.replace(router.asPath);
     },
-    onError: (e) => {
-      console.log(e);
+    onError: (e) => {},
+  });
+
+  const [createPost] = useMutation(CREATE_POST, {
+    variables: {
+      caption: '',
+      image: '',
     },
+    onCompleted: (data) => {
+      closeModalSetState(false);
+      setImageName('');
+      router.replace(router.asPath);
+    },
+    onError: (e) => {},
   });
 
   const handleCreateStory = () => {
@@ -158,22 +178,25 @@ export const useUpload = (closeModalSetState: Dispatch<boolean>) => {
       setShowSnack({ message: 'File is too Large', show: true });
       return;
     }
-
-    uploadFile({ variables: { file } });
+    try {
+      uploadFile({ variables: { file } });
+    } catch (e) {}
   };
 
   const handleBackToStepOne = () => {
     setIsStepOne(true);
-    setIsStepTwo(false);
+    setIsCreateStoryStepTwo(false);
   };
 
   return {
     val: {
       showSnack,
       isStepOne,
-      isStepTwo,
+      isCreateStoryStepTwo,
+      isCreatePostStepTwo,
       imageName,
     },
+    set: { setStoryOrPost },
     on: {
       handleUploadInputChange,
       handleBackToStepOne,
